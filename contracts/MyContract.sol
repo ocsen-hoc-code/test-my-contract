@@ -11,6 +11,7 @@ contract MyContract {
         require(balances[msg.sender] >= amount, "You don't have enough balance");
         _;
     }
+    event Transfer(address indexed from, address indexed to, uint value);
     constructor() {
         minter = msg.sender;
     }
@@ -26,5 +27,6 @@ contract MyContract {
     function send(address receiver, uint amount) public checkBalance(amount){
         balances[msg.sender]-= amount;
         balances[receiver]+= amount;
+        emit Transfer(msg.sender, receiver, amount);
     }
 }
